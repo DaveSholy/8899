@@ -54,8 +54,7 @@ if (message.content.startsWith(prefix + 'setgame')) {
 
 });
 
-const client1 = new Discord.Client();
-const client2 = new Discord.Client();
 
-client1.login(process.env.BOT_TOKEN);
-client2.login(process.env.BOT_SPAM);
+
+client.login(process.env.BOT_TOKEN);
+
