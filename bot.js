@@ -2,57 +2,54 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const client = new Discord.Client();
 
-var prefix = "#"
+
+const devs = ["569861608344518660","ايدي صاحب الب"]
+
+const adminprefix = "=";
 client.on('message', message => {
-  if (!message.content.startsWith(prefix)) return;
-  var args = message.content.split(' ').slice(1);
-  var argresult = args.join(' ');
-  if (message.author.id !== "568244115326763011") return;
-
-  
-  if (message.content.startsWith(prefix + 'setwatch')) {
-  client.user.setActivity(argresult, {type: 'WATCHING'})
-     console.log('test' + argresult);
-    message.channel.sendMessage(`Watch Now: **${argresult}`)
-} 
-
- 
-  if (message.content.startsWith(prefix + 'setlis')) {
-  client.user.setActivity(argresult, {type: 'LISTENING'})
-     console.log('test' + argresult);
-    message.channel.sendMessage(`LISTENING Now: **${argresult}`)
-} 
-
-
-if (message.content.startsWith(prefix + 'setname')) {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+      if (!devs.includes(message.author.id)) return;
+      
+  if (message.content.startsWith(adminprefix + 'ply')) {
+    client.user.setGame(argresult);
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else 
+    if (message.content === (adminprefix + "leave")) {
+    message.guild.leave();        
+  } else  
+  if (message.content.startsWith(adminprefix + 'wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else 
+  if (message.content.startsWith(adminprefix + 'ls')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else     
+    if (message.content.startsWith(adminprefix + 'setname')) {
   client.user.setUsername(argresult).then
-      message.channel.sendMessage(`Username Changed To **${argresult}**`)
-      message.react('✔')
-  return message.reply("You Can change the username 2 times per hour");
-} 
-
-if (message.content.startsWith(prefix + 'setavatar')) {
+      message.channel.sendMessage(`**${argresult}** : Done :>`)
+  return message.reply("**You Can't Change Your Name ,Only After Two Hours :>**");
+  } else
+    if (message.content.startsWith(adminprefix + 'setavatar')) {
   client.user.setAvatar(argresult);
-   message.channel.sendMessage(`Avatar Changed Successfully To **${argresult}**`);
-   message.react('✐')
-}
-
-if (message.content.startsWith(prefix + 'set')) {
-  client.user.setGame(argresult, "https://www.twitch.tv/peery13");
-     console.log('test' + argresult);
-    message.channel.sendMessage(`Streaming: **${argresult}`)
-    message.react('🔘')
-} 
-if (message.content.startsWith(prefix + 'setgame')) {
-  client.user.setGame(argresult);
-     console.log('test' + argresult);
-    message.channel.sendMessage(`Playing: **${argresult}`)
-    message.react('🎮')
-} 
-
-
-
-});
+    message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+        } else     
+  if (message.content.startsWith(adminprefix + 'st')) {
+    client.user.setGame(argresult, "https://www.twitch.tv/mohamedgamal");
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  }
+    if(message.content === adminprefix + "restart") {
+      if (!devs.includes(message.author.id)) return;
+          message.channel.send(`:warning:️ **Bot restarting by ${message.author.username}**`);
+        console.log("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(`⚠️ Bot restarting... ⚠️`);
+        console.log("===============================================\n\n");
+        client.destroy();
+        child_process.fork(__dirname + "/bot.js");
+        console.log(`Bot Successfully Restarted`);
+    }
+  
+  });
 
 
 
