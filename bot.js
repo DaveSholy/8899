@@ -3,7 +3,7 @@ const fs = require('fs');
 const client = new Discord.Client();
 
 
-const devs = ["569861608344518660","ايدي صاحب الب"]
+const devs = ["621706386631557140","ايدي صاحب الب"]
 
 const adminprefix = "=";
 client.on('message', message => {
